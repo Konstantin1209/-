@@ -18,6 +18,25 @@ class Student:
                 lecturer.grades[course] = [grade]
         else:
             return 'Ошибка' 
+        
+    def avr_student(self):
+        for avr in self.grades.values():
+            avr_grades = sum(avr)/len(avr)
+            return avr_grades
+        
+    def __str__(self):
+        some_student = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.avr_student()}\nКурсы в процессе изучения: {self.courses_in_progress}\nЗавершенные курсы: {self.finished_courses}"
+        return some_student
+    
+    def __eq__(self, other):
+        return self.self.avr_student() == other.self.avr_student()
+    
+    def __lt__(self, other):
+        return self.self.avr_student() < other.self.avr_student()
+
+    def __gt__(self, other):
+        return self.self.avr_student() > other.self.avr_student()
+
 
 class Mentor:
     def __init__(self, name, surname):
@@ -38,14 +57,33 @@ class Reviewer(Mentor):
                 student.grades[course] = [grade]
         else:
             return 'Ошибка'
+        
+    def __str__(self):
+        some_reviewer = f"Имя: {self.name}\nФамилия: {self.surname}"
+        return some_reviewer
 
 class Lecturer(Mentor):
     def __init__(self, name, surname):
         super(). __init__(name, surname)
         self.grades = {}
-        self.courses_attached = []
+        
+    def avr_lecturer(self):
+        for avr in self.grades.values():
+            avr_grades = sum(avr)/len(avr)
+            return avr_grades
+    
+    def __str__(self):
+        some_lecturer = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.avr_lecturer()}"
+        return some_lecturer
+ 
+    def __eq__(self, other):
+        return self.self.avr_lecturer() == other.self.avr_lecturer()
+    
+    def __lt__(self, other):
+        return self.self.avr_lecturer() < other.self.avr_lecturer()
 
-
+    def __gt__(self, other):
+        return self.self.avr_lecturer() > other.self.avr_lecturer()
 
 
 
@@ -55,12 +93,31 @@ class Lecturer(Mentor):
 
 best_student = Student('Ruoy', 'Eman', 'your_gender')
 best_student.courses_in_progress += ['Python']
+best_student.finished_courses += ['vd']
+cool_lecturer = Lecturer('Some', 'Buddy')
+cool_lecturer.courses_attached += ['Python']
+
+best_student.rate_lecturer(cool_lecturer, 'Python', 10)
+best_student.rate_lecturer(cool_lecturer, 'Python', 1)
+best_student.rate_lecturer(cool_lecturer, 'Python', 10)
+
+cool_lecturer1 = Lecturer('Some', 'Buddy')
+cool_lecturer1.courses_attached += ['Python']
+best_student.rate_lecturer(cool_lecturer1, 'Python', 10)
+best_student.rate_lecturer(cool_lecturer1, 'Python', 8)
+best_student.rate_lecturer(cool_lecturer1, 'Python', 10)
+
+
  
-cool_mentor = Lecturer('Some', 'Buddy')
+cool_mentor = Reviewer('Some', 'Buddy')
 cool_mentor.courses_attached += ['Python']
- 
-best_student.rate_lecturer(cool_mentor, 'Python', 2)
-best_student.rate_lecturer(cool_mentor, 'Python', 10)
-best_student.rate_lecturer(cool_mentor, 'Python', 9)
- 
-print(cool_mentor.grades)
+cool_mentor.rate_hw(best_student, 'Python', 1)
+cool_mentor.rate_hw(best_student, 'Python', 1)
+cool_mentor.rate_hw(best_student, 'Python', 10)
+print(cool_mentor)
+print()
+print(best_student)
+print()
+print(cool_lecturer)
+print()
+print(cool_lecturer1)
