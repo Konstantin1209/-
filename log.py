@@ -25,7 +25,7 @@ class Student:
             return avr_grades
         
     def __str__(self):
-        some_student = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.avr_student()}\nКурсы в процессе изучения: {self.courses_in_progress}\nЗавершенные курсы: {self.finished_courses}"
+        some_student = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {round(self.avr_student(), 2)}\nКурсы в процессе изучения: {', '.join(self.courses_in_progress)}\nЗавершенные курсы: {', '.join(self.finished_courses)}"
         return some_student
     
     def __eq__(self, other):
@@ -36,8 +36,7 @@ class Student:
 
     def __gt__(self, other):
         return self.self.avr_student() > other.self.avr_student()
-
-
+    
 class Mentor:
     def __init__(self, name, surname):
         self.name = name
@@ -73,7 +72,7 @@ class Lecturer(Mentor):
             return avr_grades
     
     def __str__(self):
-        some_lecturer = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.avr_lecturer()}"
+        some_lecturer = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {round(self.avr_lecturer(), 2)}"
         return some_lecturer
  
     def __eq__(self, other):
@@ -85,39 +84,113 @@ class Lecturer(Mentor):
     def __gt__(self, other):
         return self.self.avr_lecturer() > other.self.avr_lecturer()
 
+def avg_lecture_grade(lecturer, course):
+    total_grades = 0
+    for lecturer in lecturers:
+        if course in lecturer.grades:
+            total_grades += sum(lecturer.grades[course])
+    return total_grades / len(lecturers) if total_grades else 0
+                    
 
 
 
+    
+
+reviewer1 = Reviewer('Soma', 'Bud')
+reviewer1.courses_attached += ['Python']
+
+reviewer2 = Reviewer('Anna', 'Romanova')
+reviewer2.courses_attached += ['Python']
+
+student1 = Student('Ruoy', 'Eman', 'Man')
+student1.courses_in_progress += ['Python']
+student1.finished_courses += ['Python-разработчик с нуля', 'Fullstack-разработчик на Python']
+
+student2 = Student('Mike ', 'Tyson', 'Man')
+student2.courses_in_progress += ['Python']
+student2.finished_courses += ['Python-разработчик с нуля', 'Fullstack-разработчик на Python']
+
+lecturer1 = Lecturer('Some', 'Buddy')
+lecturer1.courses_attached += ['Python']
+
+lecturer2 = Lecturer('Bob ', 'Marley')
+lecturer2.courses_attached += ['Python']
+
+student1.rate_lecturer(lecturer1, 'Python', 10)
+student1.rate_lecturer(lecturer1, 'Python', 10)
+student1.rate_lecturer(lecturer1, 'Python', 10)
+
+student1.rate_lecturer(lecturer2, 'Python', 10)
+student1.rate_lecturer(lecturer2, 'Python', 10)
+student1.rate_lecturer(lecturer2, 'Python', 10)
+
+student2.rate_lecturer(lecturer1, 'Python', 10)
+student2.rate_lecturer(lecturer1, 'Python', 10)
+student2.rate_lecturer(lecturer1, 'Python', 10)
+
+student2.rate_lecturer(lecturer2, 'Python', 10)
+student2.rate_lecturer(lecturer2, 'Python', 10)
+student2.rate_lecturer(lecturer2, 'Python', 10)
+
+reviewer1.rate_hw(student1, 'Python', 10)
+reviewer1.rate_hw(student1, 'Python', 10)
+reviewer1.rate_hw(student1, 'Python', 5)
+
+reviewer1.rate_hw(student2, 'Python', 5)
+reviewer1.rate_hw(student2, 'Python', 5)
+reviewer1.rate_hw(student2, 'Python', 5)
+
+reviewer2.rate_hw(student1, 'Python', 10)
+reviewer2.rate_hw(student1, 'Python', 5)
+reviewer2.rate_hw(student1, 'Python', 5)
+
+reviewer2.rate_hw(student2, 'Python', 5)
+reviewer2.rate_hw(student2, 'Python', 5)
+reviewer2.rate_hw(student2, 'Python', 5)
 
 
 
-best_student = Student('Ruoy', 'Eman', 'your_gender')
-best_student.courses_in_progress += ['Python']
-best_student.finished_courses += ['vd']
-cool_lecturer = Lecturer('Some', 'Buddy')
-cool_lecturer.courses_attached += ['Python']
-
-best_student.rate_lecturer(cool_lecturer, 'Python', 10)
-best_student.rate_lecturer(cool_lecturer, 'Python', 1)
-best_student.rate_lecturer(cool_lecturer, 'Python', 10)
-
-cool_lecturer1 = Lecturer('Some', 'Buddy')
-cool_lecturer1.courses_attached += ['Python']
-best_student.rate_lecturer(cool_lecturer1, 'Python', 10)
-best_student.rate_lecturer(cool_lecturer1, 'Python', 8)
-best_student.rate_lecturer(cool_lecturer1, 'Python', 10)
-
-
- 
-cool_mentor = Reviewer('Some', 'Buddy')
-cool_mentor.courses_attached += ['Python']
-cool_mentor.rate_hw(best_student, 'Python', 1)
-cool_mentor.rate_hw(best_student, 'Python', 1)
-cool_mentor.rate_hw(best_student, 'Python', 10)
-print(cool_mentor)
+print(reviewer1)
 print()
-print(best_student)
+print(reviewer2)
 print()
-print(cool_lecturer)
+print(student1)
 print()
-print(cool_lecturer1)
+print(student2)
+print()
+print(lecturer1)
+print()
+print(lecturer2)
+print()
+
+def top_students():
+    list_students = [student1, student2]
+    list_top = []
+    for list_stud in list_students:
+        students = list_stud.name,list_stud.surname, list_stud.avr_student(), list_stud.courses_in_progress
+        list_top.append(students)
+
+    for list_ in list_top:
+        if list_[3] == ['Python']:
+            max_value = max(list_top, key=lambda x: x[2])
+    print(f"Лучший студент на курсе 'Python'\nИмя:{max_value[0]}\nФамилия: {max_value[1]}\nСредний балл: {max_value[2]}" )
+    
+top_students()
+
+print()
+
+def top_lecturers():
+    list_lecturers = [lecturer1, lecturer2]
+    list_lecturer = []
+    for list_lec in list_lecturers:
+        lecturers = list_lec.name, list_lec.surname, list_lec.avr_lecturer(), list_lec.courses_attached
+        list_lecturer.append(lecturers)
+    
+    for list_ in list_lecturer:
+        if list_[3] == ['Python']:
+            max_value = max(list_lecturer, key=lambda x: x[2])
+    print(f"Лучший лектор на курсе 'Python'\n{max_value[0]}\nФамилия: {max_value[1]}\nСредний балл: {max_value[2]}")
+
+top_lecturers()
+
+
