@@ -84,17 +84,8 @@ class Lecturer(Mentor):
     def __gt__(self, other):
         return self.self.avr_lecturer() > other.self.avr_lecturer()
 
-def avg_lecture_grade(lecturer, course):
-    total_grades = 0
-    for lecturer in lecturers:
-        if course in lecturer.grades:
-            total_grades += sum(lecturer.grades[course])
-    return total_grades / len(lecturers) if total_grades else 0
-                    
 
-
-
-    
+   
 
 reviewer1 = Reviewer('Soma', 'Bud')
 reviewer1.courses_attached += ['Python']
