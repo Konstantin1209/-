@@ -29,13 +29,25 @@ class Student:
         return some_student
     
     def __eq__(self, other):
-        return self.self.avr_student() == other.self.avr_student()
+        return self.avr_student() == other.avr_student()
     
     def __lt__(self, other):
-        return self.self.avr_student() < other.self.avr_student()
+        return self.avr_student() < other.avr_student()
 
     def __gt__(self, other):
-        return self.self.avr_student() > other.self.avr_student()
+        return self.avr_student() > other.avr_student()
+    
+    def student_ratung(list_students, course_name):
+        sum_all = 0 
+        count_all = 0
+        for stud in list_students:
+            if course_name in stud.courses_in_progress:
+                sum_all += stud.avr_student()
+                count_all += 1
+            else:
+                continue
+        avr_sum_student = sum_all / count_all
+        return f"Средняя оценка для всех студентов на курсе {course_name}: {avr_sum_student:.2f}"
     
 class Mentor:
     def __init__(self, name, surname):
@@ -76,13 +88,25 @@ class Lecturer(Mentor):
         return some_lecturer
  
     def __eq__(self, other):
-        return self.self.avr_lecturer() == other.self.avr_lecturer()
+        return self.avr_lecturer() == other.avr_lecturer()
     
     def __lt__(self, other):
-        return self.self.avr_lecturer() < other.self.avr_lecturer()
+        return self.avr_lecturer() < other.avr_lecturer()
 
     def __gt__(self, other):
-        return self.self.avr_lecturer() > other.self.avr_lecturer()
+        return self.avr_lecturer() > other.avr_lecturer()
+
+    def lecturer_ratung(list_lecturers, course_name):
+        sum_all = 0 
+        count_all = 0
+        for lec in list_lecturers:
+            if course_name in lec.courses_attached:
+                sum_all += lec.avr_lecturer()
+                count_all += 1
+            else:
+                continue
+        avr_sum_lecturers = sum_all / count_all
+        return f"Средняя оценка для всех лекторов на курсе {course_name}: {avr_sum_lecturers:.2f}"    
 
 
    
@@ -119,7 +143,7 @@ student2.rate_lecturer(lecturer1, 'Python', 10)
 student2.rate_lecturer(lecturer1, 'Python', 10)
 student2.rate_lecturer(lecturer1, 'Python', 10)
 
-student2.rate_lecturer(lecturer2, 'Python', 10)
+student2.rate_lecturer(lecturer2, 'Python', 5)
 student2.rate_lecturer(lecturer2, 'Python', 10)
 student2.rate_lecturer(lecturer2, 'Python', 10)
 
@@ -141,21 +165,26 @@ reviewer2.rate_hw(student2, 'Python', 5)
 
 
 
-print(reviewer1)
-print()
-print(reviewer2)
-print()
-print(student1)
-print()
-print(student2)
-print()
-print(lecturer1)
-print()
-print(lecturer2)
-print()
+print(reviewer1, "\n")
+print(reviewer2, "\n")
+print(student1, "\n")
+print(student2, "\n")
+print(lecturer1, "\n")
+print(lecturer2, "\n")
+print(student1 < student2, "\n")
+print(student1 > student2, "\n")
+print(student1 == student2, "\n")
+
+print(lecturer1 < lecturer2, "\n")
+print(lecturer1 > lecturer2, "\n")
+print(lecturer1 == lecturer2, "\n")
+
+list_students = [student1, student2]
+list_lecturers = [lecturer1, lecturer2]
+print(Student.student_ratung(list_students, "Python"), "\n")
+print(Lecturer.lecturer_ratung(list_lecturers, "Python"), "\n")
 
 def top_students():
-    list_students = [student1, student2]
     list_top = []
     for list_stud in list_students:
         students = list_stud.name,list_stud.surname, list_stud.avr_student(), list_stud.courses_in_progress
@@ -164,14 +193,13 @@ def top_students():
     for list_ in list_top:
         if list_[3] == ['Python']:
             max_value = max(list_top, key=lambda x: x[2])
-    print(f"Лучший студент на курсе 'Python'\nИмя:{max_value[0]}\nФамилия: {max_value[1]}\nСредний балл: {max_value[2]}" )
+        else:
+            continue
+    print(f"Лучший студент на курсе 'Python'\nИмя:{max_value[0]}\nФамилия: {max_value[1]}\nСредний балл: {max_value[2]}", "\n" )
     
 top_students()
 
-print()
-
 def top_lecturers():
-    list_lecturers = [lecturer1, lecturer2]
     list_lecturer = []
     for list_lec in list_lecturers:
         lecturers = list_lec.name, list_lec.surname, list_lec.avr_lecturer(), list_lec.courses_attached
@@ -180,8 +208,9 @@ def top_lecturers():
     for list_ in list_lecturer:
         if list_[3] == ['Python']:
             max_value = max(list_lecturer, key=lambda x: x[2])
+        else:
+            continue
     print(f"Лучший лектор на курсе 'Python'\n{max_value[0]}\nФамилия: {max_value[1]}\nСредний балл: {max_value[2]}")
 
 top_lecturers()
-
 
